@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <h1>Save a Meal!</h1>
+    <h1 class="title">Save a Meal!</h1>
   </div>
 </template>
 
@@ -10,10 +10,14 @@
 .header {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: 500;
   text-align: center;
-  background-color: rgb(212, 130, 130);
+  background-color: #c68484;
   width: 100%;
   padding: 3rem;
+}
+.title {
+  color: white;
+  font-size: 4.5em;
 }
 </style>
