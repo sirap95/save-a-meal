@@ -1,17 +1,18 @@
 <template>
     <div class="main">
-       <base-tag>ciao</base-tag>
-       <base-tag>ciaociao</base-tag>
+        <tag-layout></tag-layout>
     </div>
 </template>
 
 <script setup lang="ts">
-
+import TagLayout from '../components/layout/TagLayout.vue';
 </script>
 
 <style scoped>
 .main {
     background-color: #A3C9AA;
     width: 100%;
+    text-align: center;
 }
+
 </style>

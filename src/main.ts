@@ -4,9 +4,11 @@ import App from "./App.vue";
 import router from "./router";
 import BaseButton from "./components/ui/BaseButton.vue";
 
-import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js"
 import '@fortawesome/fontawesome-free/css/all.css';
+
 import BaseTagVue from "./components/ui/BaseTag.vue";
 
 const app = createApp(App);
