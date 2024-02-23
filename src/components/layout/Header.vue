@@ -1,6 +1,11 @@
 <template>
   <div class="header">
-    <h1 class="title">Save a Meal!</h1>
+    <h1 class="title mb-4">Save a Meal!</h1>
+    <div class="row mx-5">
+      <div class="col-md-4"> <router-link class="menu" to="/">Home</router-link></div>
+      <div class="col-md-4"> <router-link class="menu" to="/about">About</router-link></div>
+      <div class="col-md-4"><router-link class="menu" to="/help-us">Help us!</router-link></div>
+    </div>
   </div>
 </template>
 
@@ -16,8 +21,21 @@
   width: 100%;
   padding: 3rem;
 }
+
 .title {
-  color: white;
+  color: #fff;
   font-size: 4.5em;
+}
+
+.menu {
+  font-weight: bold;
+  font-size: larger;
+  color: #fff;
+  text-decoration: none;
+}
+
+.menu:hover {
+  color: #fff;
+  text-decoration: underline;
 }
 </style>

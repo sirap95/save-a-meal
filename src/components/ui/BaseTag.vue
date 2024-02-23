@@ -10,17 +10,6 @@
       <i class="fas fa-plus"></i>
     </span>
   </div>
-  <!-- <div :class="{ 'tag-selected': selected }" @click="toggleSelection">
-      <span class="tag-label">
-        <slot></slot>
-      </span>
-      <span class="tag-icon" v-if="selected">
-        <i class="fas fa-check"></i>
-      </span>
-      <span class="tag-icon" v-else>
-        <i class="fas fa-plus"></i>
-      </span>
-    </div> -->
 </template>
   
 <script lang="ts">
@@ -46,8 +35,8 @@ export default {
   box-shadow: none;
 }
 
-.tag-selected:hover {
-  background-color: #9b4444;
+.tag-selected:hover, .tag-label:hover {
+  background-color: #C68484 !important;
 }
 .tag-icon {
   display: inline-block;
@@ -55,6 +44,7 @@ export default {
 }
 
 .tag-label {
+  width:fit-content;
   display: inline-block;
   font-weight: bold;
   padding: 8px 16px;
