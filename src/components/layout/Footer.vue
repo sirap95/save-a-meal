@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        <p>&copy; 2024 Your Website. All rights reserved. | Designed by <a href="https://www.example.com">Gregorio
+        <p>&copy; 2024 SaveAMeal. All rights reserved. | Designed by <a target="_blank" href="https://github.com/sirap95">Gregorio
                 Siravo</a>
         </p>
     </div>
