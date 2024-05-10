@@ -1,6 +1,14 @@
 // mealApi.ts
 
-import { getDoc } from "firebase/firestore";
+import {
+  collection,
+  getDoc,
+  where,
+  query,
+  getDocs,
+  doc,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import {
   getStorage,
@@ -9,17 +17,9 @@ import {
   getDownloadURL,
   StorageReference,
 } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore/lite";
+import { Ingredient, Meal } from "../interfaces";
 
 const storage = getStorage();
-
-interface Meal {
-  id: any;
-  title: string;
-  description: string;
-  guide: string;
-  img: string;
-}
 
 async function uploadImage(file: File): Promise<string | null> {
   try {
@@ -64,4 +64,25 @@ async function createMeal(newMeal: Meal): Promise<void> {
   }
 }
 
-export { selectMeal, createMeal, uploadImage };
+async function fetchIngredients(strIngredient: string): Promise<Ingredient[]> {
+  console.log(db);
+  const ingredientsRef = collection(db, "ingredients");
+  const queryDoc = query(
+    ingredientsRef,
+    where("strIngredient", ">=", strIngredient),
+    where("strIngredient", "<=", strIngredient + "\uf8ff")
+  );
+  const snapshot = await getDocs(queryDoc);
+
+  const ingredients: Ingredient[] = [];
+  snapshot.forEach((doc) => {
+    ingredients.push(doc.data() as Ingredient);
+  });
+
+  return ingredients;
+}
+
+fetchIngredients("pa")
+  .then((ingredients) => console.log(ingredients))
+  .catch((error) => console.error(error));
+export { selectMeal, createMeal, uploadImage, fetchIngredients };

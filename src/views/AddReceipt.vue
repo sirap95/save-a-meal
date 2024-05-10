@@ -24,15 +24,16 @@
         <input
           id="ingredients"
           class="form-control"
-          v-model="meal.ingredients"
+          v-model="ingredientQuery"
           required
         />
         <div v-if="showAutocomplete" class="autocomplete">
           <div
             v-for="ingredient in matchedIngredients"
-            class="autocomplete-item"
+            class="autocomplete-item text-start my-2"
+            @click="addIngredient(ingredient)"
           >
-            {{ ingredient }}
+            <base-tag>{{ ingredient.strIngredient }} </base-tag>
           </div>
         </div>
         <div class="invalid-feedback">Please provide the ingredients.</div>
@@ -83,22 +84,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { createMeal, uploadImage } from "../api/mealApi";
+import { Ingredient, Meal } from "../interfaces";
+import { computed, ref, watch } from "vue";
+import { createMeal, uploadImage, fetchIngredients } from "../api/mealApi";
 import { v4 as uuidv4 } from "uuid";
+import BaseTag from "../components/ui/BaseTag.vue";
 
-interface Meal {
-  id: string;
-  title: string;
-  ingredients: Array<string>;
-  description: string;
-  guide: string;
-  img: string;
-}
-interface Ingredient {
-  idIngredient: string;
-  strIngredient: string;
-}
 const meal = ref<Meal>({
   id: uuidv4(),
   ingredients: [],
@@ -109,8 +100,43 @@ const meal = ref<Meal>({
 });
 const imageUrl = ref<string>("");
 const matchedIngredients = ref<Ingredient[]>([]);
-const showAutocomplete = ref<boolean>(false);
+const showAutocomplete = ref<boolean>(true);
 const selectedFile = ref();
+const ingredientQuery = ref<string>("");
+
+const debouncedQuery = computed(() => {
+  let timer: any;
+  return {
+    set(value: string) {
+      ingredientQuery.value = value;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        if (value.length >= 2) {
+          fetchIngredients(value)
+            .then((ingredients) => {
+              console.log("Fetched ingredients:", ingredients);
+              matchedIngredients.value = ingredients;
+            })
+            .catch(() => (matchedIngredients.value = []));
+        }
+      }, 250);
+    },
+  };
+});
+
+const addIngredient = (ingredient: Ingredient) => {
+  meal.value.ingredients.push(ingredient);
+  ingredientQuery.value = ""; // Clear the input field
+  matchedIngredients.value = []; // Clear suggestions
+};
+
+watch(
+  ingredientQuery,
+  () => {
+    debouncedQuery.value.set(ingredientQuery.value);
+  },
+  { immediate: true }
+);
 
 //TODO: ADD A VARIABLE TO SHOW OR HIDE THE FORM AFTER RECEIPT CREATED
 const addRecipe = async () => {
@@ -160,5 +186,9 @@ const handleImageUpload = (event: Event) => {
 /* Additional custom styles */
 .form-label {
   font-weight: bold;
+}
+.display-block {
+  display: block;
+  max-width: 10rem;
 }
 </style>
