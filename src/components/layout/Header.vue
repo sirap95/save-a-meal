@@ -2,9 +2,10 @@
   <div class="header">
     <h1 class="title mb-4">Save a Meal!</h1>
     <div class="row mx-5">
-      <div class="col-md-4"> <router-link class="menu" to="/">Home</router-link></div>
-      <div class="col-md-4"> <router-link class="menu" to="/about">About</router-link></div>
-      <div class="col-md-4"><router-link class="menu" to="/help-us">Help us!</router-link></div>
+      <div class="col-md-3"> <router-link class="menu" to="/">Home</router-link></div>
+      <div class="col-md-3"> <router-link class="menu" to="/about">About</router-link></div>
+      <div class="col-md-3"><router-link class="menu" to="/add">Add Receipt</router-link></div>  
+      <div class="col-md-3"><router-link class="menu" to="/help-us">Help us!</router-link></div>  
     </div>
   </div>
 </template>
