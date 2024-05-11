@@ -13,6 +13,7 @@
 </template>
   
 <script lang="ts">
+//TODO: 1) MAKE THIS BASE COMPONENT WORK ALSO WITH ADDING INGREDIENTS IN ADD RECIPE COMPONENT!
 export default {
   data() {
     return {

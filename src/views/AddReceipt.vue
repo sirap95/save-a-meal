@@ -36,6 +36,12 @@
             <base-tag>{{ ingredient.strIngredient }} </base-tag>
           </div>
         </div>
+        <div v-if="meal.ingredients.length > 0">
+          <label  class="form-label">Chosed Ingredients:</label>
+          <base-tag class="m-1" v-for="ingredient in meal.ingredients">{{
+            ingredient.strIngredient
+          }}</base-tag>
+        </div>
         <div class="invalid-feedback">Please provide the ingredients.</div>
       </div>
       <div class="col-md-12">
@@ -125,7 +131,11 @@ const debouncedQuery = computed(() => {
 });
 
 const addIngredient = (ingredient: Ingredient) => {
-  meal.value.ingredients.push(ingredient);
+  let value = {
+    idIngredient: ingredient.idIngredient,
+    strIngredient: ingredient.strIngredient,
+  };
+  meal.value.ingredients.push(value);
   ingredientQuery.value = ""; // Clear the input field
   matchedIngredients.value = []; // Clear suggestions
 };

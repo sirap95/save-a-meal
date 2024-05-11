@@ -65,7 +65,7 @@ async function createMeal(newMeal: Meal): Promise<void> {
 }
 
 async function fetchIngredients(strIngredient: string): Promise<Ingredient[]> {
-  console.log(db);
+  strIngredient = strIngredient.charAt(0).toUpperCase() + strIngredient.slice(1);
   const ingredientsRef = collection(db, "ingredients");
   const queryDoc = query(
     ingredientsRef,
@@ -82,7 +82,4 @@ async function fetchIngredients(strIngredient: string): Promise<Ingredient[]> {
   return ingredients;
 }
 
-fetchIngredients("pa")
-  .then((ingredients) => console.log(ingredients))
-  .catch((error) => console.error(error));
 export { selectMeal, createMeal, uploadImage, fetchIngredients };
