@@ -8,7 +8,6 @@
         </transition>
       </router-view>
     </div>
-    <the-footer></the-footer>
   </div>
 </template>
 

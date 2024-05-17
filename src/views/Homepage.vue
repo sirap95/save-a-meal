@@ -12,7 +12,7 @@ import SearchBar from "../components/search/SearchBar.vue";
 
 const clickedIngredients = ref<string[]>([]);
 
-function handleIngredient(tag: { isChecked: boolean; ingredient: string }) {
+function handleIngredient(tag: { isChecked: boolean; ingredient: object }) {
   if (tag.isChecked) {
     clickedIngredients.value.push(tag.ingredient);
   } else if (!tag.isChecked) {

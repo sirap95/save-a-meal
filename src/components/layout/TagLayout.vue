@@ -2,21 +2,55 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <base-tag @click="toggleIngredient('tomato', 0)">Tomato</base-tag>
+        <base-tag
+          @click="
+            toggleIngredient(
+              { idIngredient: '399', strIngredient: 'Tomato Sauce' },
+              0
+            )
+          "
+          >Tomato Sauce</base-tag
+        >
       </div>
       <div class="col">
-        <base-tag @click="toggleIngredient('chicken', 1)">Chicken</base-tag>
+        <base-tag
+          @click="
+            toggleIngredient({ idIngredient: '17', strIngredient: 'Basil' }, 1)
+          "
+          >Basil</base-tag
+        >
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <base-tag @click="toggleIngredient('cheese', 2)">Cheese</base-tag>
+        <base-tag
+          @click="
+            toggleIngredient(
+              { idIngredient: '236', strIngredient: 'Parmigiano-reggiano' },
+              2
+            )
+          "
+          >Parmigiano reggiano</base-tag
+        >
       </div>
       <div class="col">
-        <base-tag @click="toggleIngredient('pasta', 3)">Pasta</base-tag>
+        <base-tag
+          @click="
+            toggleIngredient(
+              { idIngredient: '243', strIngredient: 'Penne Rigate' },
+              3
+            )
+          "
+          >Penne Rigate</base-tag
+        >
       </div>
       <div class="col">
-        <base-tag @click="toggleIngredient('carrots', 4)">Carrot</base-tag>
+        <base-tag
+          @click="
+            toggleIngredient({ idIngredient: '364', strIngredient: 'Onion' }, 4)
+          "
+          >Onion</base-tag
+        >
       </div>
     </div>
     <div class="row">
@@ -38,7 +72,7 @@ const ingredient = ref<string>();
 //const ingredientArray = ref<string[]>([]);
 const isChecked = ref<boolean[]>(new Array(7).fill(false));
 
-function toggleIngredient(input: string, index: number) {
+function toggleIngredient(input: object, index: number) {
   isChecked.value[index] = !isChecked.value[index];
   if (!isChecked.value[index]) {
     ingredient.value = input;
@@ -48,7 +82,7 @@ function toggleIngredient(input: string, index: number) {
   }
   emit("emit-ingredient", {
     isChecked: isChecked.value[index],
-    ingredient: ingredient.value
+    ingredient: ingredient.value,
   });
 }
 </script>

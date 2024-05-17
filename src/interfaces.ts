@@ -5,7 +5,7 @@ export interface Ingredient {
 export interface Meal {
   id: string;
   title: string;
-  ingredients: Array<Ingredient>;
+  ingredients: Ingredient[];
   description: string;
   guide: string;
   img: string;

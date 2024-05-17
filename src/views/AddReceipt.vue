@@ -25,9 +25,8 @@
           id="ingredients"
           class="form-control"
           v-model="ingredientQuery"
-          required
         />
-        <div v-if="showAutocomplete" class="autocomplete">
+        <div class="autocomplete">
           <div
             v-for="ingredient in matchedIngredients"
             class="autocomplete-item text-start my-2"
@@ -106,7 +105,6 @@ const meal = ref<Meal>({
 });
 const imageUrl = ref<string>("");
 const matchedIngredients = ref<Ingredient[]>([]);
-const showAutocomplete = ref<boolean>(true);
 const selectedFile = ref();
 const ingredientQuery = ref<string>("");
 
@@ -136,8 +134,8 @@ const addIngredient = (ingredient: Ingredient) => {
     strIngredient: ingredient.strIngredient,
   };
   meal.value.ingredients.push(value);
-  ingredientQuery.value = ""; // Clear the input field
-  matchedIngredients.value = []; // Clear suggestions
+  ingredientQuery.value = "";
+  matchedIngredients.value = []; 
 };
 
 watch(

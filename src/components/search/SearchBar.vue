@@ -8,9 +8,9 @@
         name="food"
         id="food"
         :style="{ width: inputWidth + 'px' }"
-        placeholder="Insert a recipe name or an ingredient"
+        placeholder="Insert a recipe name or some ingredients"
       />
-      <button class="tag-icon btn">
+      <button class="tag-icon btn" @click="searchRecipe(searchQuery)">
         <i class="fas fa-search"></i>
       </button>
     </div>
@@ -19,28 +19,45 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import { selectMeal } from "../../api/mealApi.ts";
 
 const emit = defineEmits(["update-search-query"]);
 const { activeTags } = defineProps(["activeTags"]);
 const searchQuery = ref<string>("");
 const inputWidth = ref(window.innerWidth / 2);
+const searchTags = ref<string[]>([]);
+const searchResult = ref({});
 
 window.addEventListener("resize", () => {
   inputWidth.value = window.innerWidth / 2;
 });
+
 watch(activeTags, (newValue) => {
   if (newValue && newValue.length > 0) {
-    // Convert the activeTags array to a comma-separated string
-    const newSearchQuery = newValue.join(", ");
-    
-    // Check if the new searchQuery is different from the current one
+    const newSearchQuery =
+      newValue.length === 1
+        ? newValue[0].strIngredient // Single element: use strIngredient directly
+        : newValue.map((item) => item.strIngredient).join(", "); // Multiple elements: map and join
+    searchTags.value = newValue;
     if (searchQuery.value !== newSearchQuery) {
       searchQuery.value = newSearchQuery;
     }
   } else {
+    searchTags.value = [];
     searchQuery.value = "";
   }
 });
+
+async function searchRecipe(query) {
+  if (query) {
+    const useQuery = query.includes(",") ? searchTags.value : query;
+
+    searchResult.value = selectMeal(useQuery);
+    console.log(searchResult.value);
+  } else {
+    alert("no value");
+  }
+}
 </script>
 
 <style scoped>
