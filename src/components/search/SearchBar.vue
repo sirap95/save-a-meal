@@ -21,12 +21,12 @@
 import { ref, watch } from "vue";
 import { selectMeal } from "../../api/mealApi.ts";
 
-const emit = defineEmits(["search-result"]);
+const emit = defineEmits(["search-result", "open-error", "open-noresult"]);
 const { activeTags } = defineProps(["activeTags"]);
 const searchQuery = ref<string>("");
 const inputWidth = ref(window.innerWidth / 2);
 const searchTags = ref<any>([]);
-const searchResult = ref({});
+const searchResult = ref();
 
 window.addEventListener("resize", () => {
   inputWidth.value = window.innerWidth / 2;
@@ -36,10 +36,10 @@ watch(activeTags, (newValue) => {
   if (newValue && newValue.length > 0) {
     const newSearchQuery =
       newValue.length === 1
-        ? newValue[0].strIngredient // Single element: use strIngredient directly
+        ? newValue[0].strIngredient
         : newValue
             .map((item: { strIngredient: any }) => item.strIngredient)
-            .join(", "); // Multiple elements: map and join
+            .join(", ");
     searchTags.value = newValue;
     if (searchQuery.value !== newSearchQuery) {
       searchQuery.value = newSearchQuery;
@@ -55,11 +55,15 @@ async function searchRecipe(query: any) {
     const useQuery = query.includes(",") ? searchTags.value : query;
 
     searchResult.value = await selectMeal(useQuery);
-    if (searchResult.value) {
+    if (searchResult.value.length !== 0) {
+      console.log("this is searchResult: ", searchResult.value);
       emit("search-result", searchResult.value);
+      searchQuery.value = "";
+    } else {
+      emit("open-noresult", true);
     }
   } else {
-    alert("no value");
+    emit("open-error", true);
   }
 }
 </script>
